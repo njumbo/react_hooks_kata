@@ -1,12 +1,12 @@
-import { ContactList } from '../../src/components/ContactList';
+import { ContactList } from '../ContactList';
 import * as React from 'react';
-import { Contact } from '../../models/Contact';
+import { Contact } from '../../../models/Contact';
 import faker from 'faker';
 import {logRoles, render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import { Provider } from 'react-redux';
-import { reducer, syncContactsWithStorageMiddleware } from '../../src/store/State';
+import { reducer, syncContactsWithStorageMiddleware } from '../../store/State';
 import { applyMiddleware, createStore } from 'redux';
 
 function renderContactList() {
