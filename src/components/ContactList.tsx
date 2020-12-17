@@ -11,6 +11,7 @@ import * as contactActions from '../store/actions';
 import * as fromContacts from '../store/selectors';
 import {Search} from './Search';
 import {Contact} from "../../models/Contact";
+import {ContactRow} from "./ContactRow";
 
 const REGEXP_STR = '^[0-9]{9}$';
 
@@ -51,36 +52,6 @@ function useChuckNorris(): [string, (event: React.MouseEvent<HTMLButtonElement>)
             });
     }, []);
     return [joke, onClick];
-}
-
-type ContactRowProps = {
-    contact: Contact
-}
-
-const ContactRow = ({contact}: ContactRowProps) => {
-    const dispatch = useDispatch()
-
-    const setAsFav = useCallback(
-        (favContact: Contact) => {
-            favContact.isFavorite = !favContact.isFavorite;
-            dispatch(contactActions.update(favContact));
-        },
-        []
-    );
-
-    return <tr className={`contact ${contact.isFavorite ? 'favorite' : ''}`} key={contact.phone}>
-        <td role="name">{contact.name}</td>
-        <td role="phone">{contact.phone}</td>
-        <td>
-            <IconButton
-                aria-label="Fav"
-                onClick={() => setAsFav(contact)}
-                color={contact.isFavorite ? 'primary' : 'default'}
-            >
-                <StarIcon/>
-            </IconButton>
-        </td>
-    </tr>
 }
 
 export const ContactList = () => {
