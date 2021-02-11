@@ -4,6 +4,7 @@ import React, {useCallback} from "react";
 import * as contactActions from "../store/actions";
 import {IconButton} from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
+import {ContactImage} from "./ContactImage";
 
 type ContactRowProps = {
     contact: Contact
@@ -31,6 +32,7 @@ export const ContactRow = ({contact}: ContactRowProps) => {
             >
                 <StarIcon/>
             </IconButton>
+            <ContactImage contact={contact}/>
         </td>
     </tr>
 }
