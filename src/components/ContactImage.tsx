@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useRef} from "react";
 import {Contact} from "../../models/Contact";
 
 
@@ -7,12 +7,14 @@ type ContactImageProps = {
 }
 
 export const ContactImage = ({contact}: ContactImageProps) => {
-    const saveOnLocalStorage = (event: any) => {
-        console.log(event)
+    const inputRef = useRef(null);
+
+
+    const saveOnLocalStorage = useCallback ((event: any) => {
+
         const reader  = new FileReader();
         // @ts-ignore
-        const file = document.getElementById('uploadedImage')?.files[0];
-
+        const file = inputRef.current?.files[0];
         if (file) {
             reader.readAsDataURL(file);
             reader.onload = () => {
@@ -27,12 +29,12 @@ export const ContactImage = ({contact}: ContactImageProps) => {
         // }
         //
         // reader.readAsDataURL(input.files[0]);
-    }
+    },[inputRef])
     const imageInStorage = localStorage.getItem('key')
     const imageContentForContact = imageInStorage ? "defaultImage" : imageInStorage!!;
 
     return <form>
-        <input type="file" id="uploadedImage" data-testid="uploadedImageTestId" onChange={(e) => saveOnLocalStorage(e)} />
+        <input type="file" ref={inputRef} data-testid="uploadedImageTestId" onChange={saveOnLocalStorage} />
         <button>
             <img src={imageContentForContact} />
         </button>
