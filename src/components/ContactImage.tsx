@@ -15,7 +15,14 @@ export const ContactImage = ({contact}: ContactImageProps) => {
         const reader  = new FileReader();
         // @ts-ignore
         const file = inputRef.current?.files[0];
+        console.log('a ver quejesto', file);
+
+
+        
+        
         if (file) {
+            
+
             reader.readAsDataURL(file);
             reader.onload = () => {
                 localStorage.setItem('key', reader.result ? reader.result.toString() : "");
@@ -34,7 +41,9 @@ export const ContactImage = ({contact}: ContactImageProps) => {
     const imageContentForContact = imageInStorage ? "defaultImage" : imageInStorage!!;
 
     return <form>
-        <input type="file" ref={inputRef} data-testid="uploadedImageTestId" onChange={saveOnLocalStorage} />
+        <input type='file'
+        //  accept='image/*'
+          ref={inputRef} data-testid="uploadedImageTestId" onChange={saveOnLocalStorage} />
         <button>
             <img src={imageContentForContact} />
         </button>

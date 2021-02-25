@@ -26,8 +26,8 @@ describe("ContactImage", () => {
 
   it("should show the uploaded image", async () => {
 
-    const imageContent = Math.random().toString()
-    const imageContentBase64 = 'data:image/png;base64,' + btoa(imageContent)
+    const imageContent = Math.random().toString();
+    const imageContentBase64 = 'data:image/png;base64,' + btoa(imageContent);
 
     render(<ContactImage contact={contact} />);
     const fileInputField = screen.getByTestId("uploadedImageTestId");
@@ -45,5 +45,28 @@ describe("ContactImage", () => {
     );
   });
 
-  it("should upload an image", () => {});
+  
+
+  it("should not allow to upload image files bigger than 1 MB", async () => {});
+
+
+  it("should not allow to upload not image files", async () => {
+    const fileContent = Math.random().toString();
+
+    render(<ContactImage contact={contact} />);
+    const fileInputField = screen.getByTestId("uploadedImageTestId");
+    const event = {
+      target: {
+        files: [
+          new File([fileContent], "test.txt", { type: "text/plain" }),
+        ],
+      },
+    };
+    fireEvent.change(fileInputField, event);
+
+    await waitFor(() =>
+      expect(localStorage.getItem("key")).toEqual(null)
+    );
+
+  });
 });
